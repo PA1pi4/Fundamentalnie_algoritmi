@@ -5,4 +5,4 @@ for x in arr:
     if min > x:
         min_old = min
         min = x
-print(min_old)
+print(min)
