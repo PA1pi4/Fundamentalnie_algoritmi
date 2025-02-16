@@ -1,4 +1,8 @@
-arr = [1, 2, 3, 4, 5, 6, 7] # Оригинальный массив
+import random
+n = random.randint(10, 15)
+arr = []
+for i in range(1, n):
+    arr.append(random.randint(0, 200)) # Добавил рандомный генератор массива для проверки
 
 min = arr[0]
 min_old = min
@@ -16,4 +20,5 @@ for x in arr:
     else:
         min_old = x
 
+print(arr)
 print(min_old)
