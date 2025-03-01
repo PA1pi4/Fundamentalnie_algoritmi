@@ -1,11 +1,13 @@
 import random
-n = random.randint(10, 15)
-arr = []
-for i in range(1, n):
-    arr.append(random.randint(0, 200))  # Добавил рандомный генератор массива для проверки
 
-min = arr[0]
-min_old = min
+n = random.randint(5, 15)  # генерация знаяения длины массива
+arr = []  # инициализация пустого массива
+for i in range(1, n):
+    arr.append(random.randint(0, 200))  # Добавление рандомного генератора массива
+# Преобразует список arr во множество, где все дубликаты автоматически удаляются
+unique = len(set(arr))  # Возвращает количество элементов, равное количеству уникальных значений в исходном списке.
+min = arr[0]  # инициализация минимума
+min_old = min  # инициализация второго минимума
 
 for x in arr:
     if x < min <= min_old:
@@ -20,6 +22,8 @@ for x in arr:
         min_old = min_old
     else:
         min_old = x
-
-print(arr)
-print(min_old)
+if unique < 3:
+    print("Ошибка: массив должен содержать более двух отличных друг от друга значений.")
+else:
+    print(arr)
+    print(min_old)
