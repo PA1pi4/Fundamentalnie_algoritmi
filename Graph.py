@@ -1,43 +1,73 @@
-Grapf = [[0,1], [0,2], [0,3], [2,3], [4,5], [1, 6]]
+def count_vertices(edges):
+    """Подсчет количества вершин в графе."""
+    vertices = set()
+    for edge in edges:
+        vertices.add(edge[0])
+        vertices.add(edge[1])
+    return len(vertices)
 
-def search_connection(a, b, graph):
-    start = a
-    end = b
-    matrixOfConnections = initialize_matrix(count_nodes(graph)[1])
-    level = 1
-    current_node = 0
-    nodes = count_nodes(graph)[0]
-    for node in nodes:
-        level = 1
-        for i in nodes:
-            if edge_exsist(current_node, i, graph):
-                if current_node == i:
-                    continue
-                matrixOfConnections[current_node][i] = level + 1
-        level += 1
-        current_node += 1
+def get_vertices(edges):
+    """Получение списка вершин из списка ребер."""
+    vertices = set()
+    for edge in edges:
+        vertices.add(edge[0])
+        vertices.add(edge[1])
+    return list(vertices)
 
-    return matrixOfConnections
-
-def count_nodes(graph):
-    amount_of_nodes = list(set([i for l in graph for i in l]))
-    return amount_of_nodes, len(amount_of_nodes) # в amount_of_nodes соответствие номеров узлов по факту инедексам(номинальный номер узла)
-
-def edge_exsist(current_node, next_node, graph):
-    for i in graph:
-        if (current_node in i) and (next_node in i):
-            return True
-        else:
-            continue
-    return False
-
-def initialize_matrix(amount_of_nodes):
-    matrix = []
-    for i in range(amount_of_nodes):
-        array = [0 for _ in range(amount_of_nodes)]
-        array[i] = 1
-        matrix.append(array)
-    return matrix
-
-for i in search_connection(1, 2, Grapf):
-    print(i)
+def wave_algorithm(edges, start, end):
+    """Реализация волнового алгоритма."""
+    vertices = get_vertices(edges)
+    num_vertices = count_vertices(edges)
+    
+    # Инициализация массива пройденных вершин
+    visited = {v: 0 for v in vertices}
+    visited[start] = 1
+    
+    # Инициализация массива предков
+    parent = {v: None for v in vertices}
+    
+    # Флаг для проверки, найдена ли конечная вершина
+    found = False
+    
+    # Шаг волнового алгоритма
+    step = 1
+    
+    while True:
+        new_vertices_found = False
+        
+        # Проходим по всем вершинам, посещенным на предыдущем шаге
+        for v in vertices:
+            if visited[v] == step:
+                # Проверяем соседей текущей вершины
+                for edge in edges:
+                    if edge[0] == v and visited[edge[1]] == 0:
+                        visited[edge[1]] = step + 1
+                        parent[edge[1]] = v
+                        new_vertices_found = True
+                    if edge[1] == v and visited[edge[0]] == 0:
+                        visited[edge[0]] = step + 1
+                        parent[edge[0]] = v
+                        new_vertices_found = True
+        
+        # Если конечная вершина найдена, завершаем
+        if visited[end] != 0:
+            found = True
+            break
+        
+        # Если новые вершины не найдены, завершаем
+        if not new_vertices_found:
+            break
+        
+        step += 1
+    
+    # Восстановление пути
+    if found:
+        path = []
+        current = end
+        while current is not None:
+            path.append(current)
+            current = parent[current]
+        path.reverse()
+        return path, visited
+    else:
+        return None, visited
