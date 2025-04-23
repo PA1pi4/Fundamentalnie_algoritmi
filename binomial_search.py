@@ -2,7 +2,7 @@ import timeit  # подключение библиотек
 import random
 import time
 
-leng = 14  # определение длины массива
+leng = 15  # определение длины массива
 arr = []  # инициализация пустого массива
 for i in range(0, leng):
     arr.append(random.randint(100, 800))  # заполнение массива случайными числам
