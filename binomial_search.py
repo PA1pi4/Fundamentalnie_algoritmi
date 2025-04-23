@@ -1,7 +1,8 @@
 import timeit  # подключение библиотек
 import random
+import time
 
-leng = 10  # определение длины массива
+leng = 14  # определение длины массива
 arr = []  # инициализация пустого массива
 for i in range(0, leng):
     arr.append(random.randint(100, 800))  # заполнение массива случайными числам
@@ -26,15 +27,16 @@ def fun():  # инициализация функции
     return -1
 
 
-start = timeit.default_timer()  # запуск таймера
-print("The start time is :", start)
+time_start = timeit.default_timer()  # запуск таймера
+print("The start time for binomial_search is :", time_start)
+time.sleep(1)
+
 it, result = fun()  # запуск функции
 if result != -1:
     print(f"Target found at index {result}")  # вывод искомого значения
 else:
     print("Target not found")  # вывод об отсутствии искомого значения
+
+print("The difference of time for binomial_search is :", timeit.default_timer() - time_start - 1)
 print(f"The amount of iterations is {it}")  # вывод понадобившегося числа итераций
-dif = timeit.default_timer() - start  # рассчёт времени, понадобившегося на нахождение значения
-difr = f"{dif:.7f}"  # округление времени, понадобившегося на нахождение значения
-print(
-    f"The difference of time is: {timeit.default_timer()} - {start} = {difr}")  # вывод времени
+
