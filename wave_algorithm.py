@@ -1,3 +1,6 @@
+import timeit
+import time
+
 def count_vertices(edges):
     """Подсчет количества вершин в графе."""
     vertices = set()
@@ -20,6 +23,10 @@ def wave_algorithm(edges, start, end):  # определение функции 
     """Реализация волнового алгоритма."""
 
     vertices = get_vertices(edges)  # вершины = список вершин
+
+    time_start = timeit.default_timer()
+    print("The start time for wave_algorithm is :", time_start)
+    time.sleep(1)
 
     # Инициализация массива пройденных вершин
     visited = {v: 0 for v in vertices}  # словарь посещенных вершин, в котором каждому ключу из списка вершин,
@@ -87,6 +94,22 @@ def wave_algorithm(edges, start, end):  # определение функции 
             current = parent[current]  # перезаписываем действующее значение на значение словаря предков с ключем
             # действующего значения end = 2, parent = {..., 2: 1, 1: 6, 6: 7, 7: None}.
         path.reverse()  # перевораиваем массив путь
+        print("The difference of time for wave_algorithm is :", timeit.default_timer() - time_start - 1)
         return path, visited  # возвращаем массив путь и словарь посещенных вершин
     else:
+        print("The difference of time wave_algorithm is :", timeit.default_timer() - time_start - 1)
         return None, visited  # иначе возвращаем словарь посещенных вершин
+    
+# Пример использования
+edges = [(1, 2), (2, 3), (3, 4), (4, 5), (1, 6), (6, 7), (7, 5)]
+start = 7
+end = 2
+
+path, visited = wave_algorithm(edges, start, end)
+
+if path:
+    print(f"Кратчайший путь от {start} до {end}: {path}")
+else:
+    print(f"Путь от {start} до {end} не найден")
+
+print("Шаги посещения вершин:", visited)
