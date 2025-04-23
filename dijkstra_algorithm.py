@@ -35,9 +35,9 @@ graph = {
 }
 
 time_start = timeit.default_timer()
-print("The start time for count_vertices is :", time_start)
+print("The start time for dijkstra_algorithm is :", time_start)
 time.sleep(1)
 
 print(dijkstra(graph, 0))  # Вывод: {0: 0, 1: 1, 2: 3, 3: 4}
 
-print("The difference of time is :", timeit.default_timer() - time_start - 1)
+print("The difference of time for dijkstra_algorithm is :", timeit.default_timer() - time_start - 1)
